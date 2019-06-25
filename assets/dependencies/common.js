@@ -274,7 +274,6 @@ $('.signup-button').click(function(){
                 if(response.status == "Success"){
                     $('.signup-button').text("Sign Up");
                     localStorage.setItem("email", $('.signup-email').val());
-                    alert($('.signup-email').val());
                     window.location.replace("/dashboard");
                 }else{
                     alert(response.error);
