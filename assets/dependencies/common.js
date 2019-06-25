@@ -262,7 +262,6 @@ $('.signup-email').focusout(function(){
 $('.signup-button').click(function(){
     if(validSignupEmail==true && validSignupPassword == true && validSignupAddress == true && validSignupName && validSignupPhoneNumber && validSignupSalary && validSignupTenure){
         $.ajax({
-
             url: 'https://cloud-mortgage-web-service.herokuapp.com/addUser?name='+$('.signup-name').val()+'&email='+$('.signup-email').val()+'&password='+$('.signup-password').val()+'&address='+$('.signup-address').val()+'&phoneNumber='+$('.signup-phonenumber').val()+'&salary='+$('.signup-salary').val()+'&tenure='+$('.signup-tenure').val(),
             dataType:'json',
             beforeSend: function( xhr ) {
@@ -272,9 +271,13 @@ $('.signup-button').click(function(){
             .done(function( data ) {
                 var jsonResponse = JSON.stringify(data);
                 var response = JSON.parse(jsonResponse);
-                $('.signup-button').text("Sign Up");
-                localStorage.setItem("email", $('.signin-email').val());
-                window.location.replace("/dashboard");
+                if(response.status == "Success"){
+                    $('.signup-button').text("Sign Up");
+                    localStorage.setItem("email", $('.signup-email').val());
+                    window.location.replace("/dashboard");
+                }else{
+                    alert(response.error);
+                }
         })
     }else{
         alert("One of the values is not validated properly, please check again!");
