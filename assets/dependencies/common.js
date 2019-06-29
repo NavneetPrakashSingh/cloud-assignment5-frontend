@@ -90,9 +90,11 @@ $('.signin-password').keyup(function(){
 });
 
 $('.signin-button').click(function(){
+
     if(validateEmail == true && validPassword == true){
+        var encryptedPassword = CryptoJS.AES.encrypt($('.signin-password').val(), "cloud computing");
         $.ajax({
-            url: 'https://cloud-mortgage-web-service.herokuapp.com/authUser?email='+$('.signin-email').val()+'&password='+$('.signin-password').val(),
+            url: 'https://cloud-mortgage-web-service.herokuapp.com/authUser?email='+$('.signin-email').val()+'&password='+encryptedPassword,
             dataType:'json',
             beforeSend: function( xhr ) {
                
@@ -260,9 +262,11 @@ $('.signup-email').focusout(function(){
 });
 
 $('.signup-button').click(function(){
+
     if(validSignupEmail==true && validSignupPassword == true && validSignupAddress == true && validSignupName && validSignupPhoneNumber && validSignupSalary && validSignupTenure){
+        var encryptedPassword = CryptoJS.AES.encrypt($('.signup-password').val(), "cloud computing");
         $.ajax({
-            url: 'https://cloud-mortgage-web-service.herokuapp.com/addUser?name='+$('.signup-name').val()+'&email='+$('.signup-email').val()+'&password='+$('.signup-password').val()+'&address='+$('.signup-address').val()+'&phoneNumber='+$('.signup-phonenumber').val()+'&salary='+$('.signup-salary').val()+'&tenure='+$('.signup-tenure').val(),
+            url: 'https://cloud-mortgage-web-service.herokuapp.com/addUser?name='+$('.signup-name').val()+'&email='+$('.signup-email').val()+'&password='+encryptedPassword+'&address='+$('.signup-address').val()+'&phoneNumber='+$('.signup-phonenumber').val()+'&salary='+$('.signup-salary').val()+'&tenure='+$('.signup-tenure').val(),
             dataType:'json',
             beforeSend: function( xhr ) {
                 $('.signup-button').text("Loading...");
